@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins:
+              - "http://2.26.2.143"
+              - "http://localhost:3000"
+            allowed-methods:
+              - "*"
+            allowed-headers:
+              - "*"
+            allow-credentials: true
+      routes:
+        - id: film-service
+          uri: http://film-service:8081
+          predicates:
+            - Path=/api/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
